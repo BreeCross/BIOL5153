@@ -1,0 +1,9 @@
+﻿planet,diameter-mi,radius-mi,orbital-period-days,distance-from-sun-million-mi,number-of-moons
+Mercury,3032,1516,88,35.98,0
+Venus,7520.8,3760,225,67.24,0
+Earth,7917.5,3959,365,92.96,1
+Mars,4212,2106,687,141.6,2
+Jupiter,86881.4,43441,4380,483.8,67
+Saturn,72367.4,36184,10585,890.8,62
+Uranus,31518,15759,30660,1784,27
+Neptune,30599,15299,60225,2793,14
