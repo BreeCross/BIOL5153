@@ -1,53 +1,103 @@
-
-#watermelon.fsa
-#watermelon.gff
+#! /usr/bin/env python3
 
 import argparse
 
-parser = argparse.ArgumentParser(description = "examine any 2 files")
+def parse():
+    parser = argparse.ArgumentParser(description = "examine any 2 files")
 
-#add positional arguement
-parser.add_argument("--data1", help = "the gff file", default = 'watermelon.gff')
-parser.add_argument("--data2", help = "the fsa file", default = 'watermelon.fsa')
+    #add positional arguement
+    parser.add_argument("data1", help = "the gff file")
+    parser.add_argument("data2", help = "the fsa file")
 
-#command line arguements
-args = parser.parse_args()
+    #command line arguements
+    args = parser.parse_args()
 
-data = open(args.data1)
-dataf = open (args.data2).readlines()
+    #data = open(args.data1)
+    #dataf = open (args.data2).readlines()
 
-#the variable 'genome' holds the genome sequence
-genome = []
+    return args
 
-#read gff line by line
-for line in data:
-    #skip blank lines
 
-    #remove line breaks
-    line = line.rstrip("\n")
-    #print(num)
-    #split each line on the tab character
-    
-    # sequence, source, feature, begin, end, length, strand, phase,  att = line.split("\.t")
-    fields = line.split("\t")
-    start = int(fields[3])
-    stop = int(fields [4])
-     
-    #extrct the dna sequence from the genome for this feature
-    substring = dataf[start:stop]
-    genome = genome + substring
-    #print the dna_sequence for this feature
-    #print(genome)
+
+
+def Bioparse():
+    # bio python to parse fsa file
+
+    from Bio import SeqIO
+
+    genome1 =SeqIO.read(args.data2, 'fasta')
+
+    #directory of different functions
+    print(dir(genome1))
+
+    #fasta header line
+    print(genome1.description)
+
+    #print the length of the sequence
+    print(len(genome1.seq))
+    #print the sequence itself
+    print(genome1.seq)
+
+    #print the complement
+    print(reverse_complement(genome1))
+
+
+
+def csvparse():
+    #csv to parse gff file
+
+    import csv
+
+    #the variable 'genome' holds the genome sequence
+
+    genome = []
+
+
+    #open data file
+
+    with open(args.data1, 'r') as gff_file:
+
+    #create a csv reader object
+    #have to give the reader what the delimiter is, i.e. comma
+
+        csvr = csv.reader(gff_file, delimiter='\t')
+
+        for line in csvr:
+
+#conditional formatting to skip empty lines
+
+            if not line:
+                continue
+            else:
+                start = int([3])
+            stop = int([4])
+
+
+
+        substring = sequence[start:stop]
+        genome = genome + substring
+        print(genome)
+            #print GC content
+
+        G = str(genome).count('G')
+        C = str(genome).count('C')
+        total = len(str(genome))
+        GC_total = G+C
+        GC_content = GC_total/total
+        print(GC_content)
+
+    return genome
+
+def main():
+   Bioparse()
+   csvparse()
+
+args = parse()
+
+if __name__ == "__main__":
+	main()
 #write the code for extracting the substring
-    
-    
 #caculate the GC content for this feature, and print it to the screen
-    G = str(genome).count('G')
-    C = str(genome).count('C')
-    total = len(str(genome))
-    GCtotal = G+C
-    GCcon = GCtotal/total
-    print(GCcon)    
-    
 #save it, track it with GIT, push it to GIThub. We will continue to modify and upload to GITHUB
+
 
